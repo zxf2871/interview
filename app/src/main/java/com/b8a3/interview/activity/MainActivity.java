@@ -22,52 +22,55 @@ public class MainActivity extends FragmentActivity {
         printDe1();
         getScreenSizeOfDevice();
         getScreenSizeOfDevice2();
-        String a = new String("abc");
-        String b = new String("abc");;
-        Log.e("------>", "a==b:"+(a==b));
-        String as = "abs";
-        String bs = "abs";
-        Log.e("------>", "as==bs:"+(as==bs));
-        changeA(a);
-        Log.e("------>", "a:"+a);
-        Integer ai = 127;
-        Integer bi = 127;
-        Log.e("------>", "ai==bi:"+(ai==bi));
-        Integer ai1 = new Integer(1);
-        Integer bi1 = new Integer(1);
-        Log.e("------>", "ai1==bi1:"+(ai1==bi1));
-        changeAi(ai1);
-        Log.e("------>", "ai1:"+ai1);
-
-
+        test();
     }
 
-    private void changeA(String a){
+    private void test() {
+        String a = new String("abc");
+        String b = new String("abc");
+        ;
+        Log.e("------>", "a==b:" + (a == b));
+        String as = "abs";
+        String bs = "abs";
+        Log.e("------>", "as==bs:" + (as == bs));
+        changeA(a);
+        Log.e("------>", "a:" + a);
+        Integer ai = 127;
+        Integer bi = 127;
+        Log.e("------>", "ai==bi:" + (ai == bi));
+        Integer ai1 = new Integer(1);
+        Integer bi1 = new Integer(1);
+        Log.e("------>", "ai1==bi1:" + (ai1 == bi1));
+        changeAi(ai1);
+        Log.e("------>", "ai1:" + ai1);
+    }
+
+    private void changeA(String a) {
         a.toUpperCase();
 
         a = null;
     }
 
-    private void changeAi(Integer ai){
-        ai=new Integer(2);
+    private void changeAi(Integer ai) {
+        ai = new Integer(2);
     }
 
-    private void printDe(){
+    private void printDe() {
         float density = getResources().getDisplayMetrics().density;
         int densityDpi = getResources().getDisplayMetrics().densityDpi;
         int w = getResources().getDisplayMetrics().widthPixels;
         int h = getResources().getDisplayMetrics().heightPixels;
-        Log.e("------>", "density:" + density +" densityDpi:"
-                + densityDpi+" w:" + w+" h:" + h);
+        Log.e("------>", "density:" + density + " densityDpi:"
+                + densityDpi + " w:" + w + " h:" + h);
     }
 
-    private void printDe1(){
+    private void printDe1() {
         WindowManager windowManager = getWindowManager();
         DisplayMetrics displayMetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getRealMetrics(displayMetrics);
 
-        Log.e("------>", "density:" + displayMetrics.density +" densityDpi:"
-                + displayMetrics.densityDpi+" w:" + displayMetrics.widthPixels+" h:" + displayMetrics.heightPixels + " 屏幕dp:" + (1080/displayMetrics.density));
+        Log.e("------>", "density:" + displayMetrics.density + " densityDpi:"
+                + displayMetrics.densityDpi + " w:" + displayMetrics.widthPixels + " h:" + displayMetrics.heightPixels + " 屏幕dp:" + (1080 / displayMetrics.density));
     }
 
     private void getScreenSizeOfDevice() {
@@ -77,22 +80,22 @@ public class MainActivity extends FragmentActivity {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         windowManager.getDefaultDisplay().getRealMetrics(displayMetrics);
 
-        int width=dm.widthPixels;
-        int height=dm.heightPixels;
-        double x = Math.pow(width,2);
-        double y = Math.pow(height,2);
-        double diagonal = Math.sqrt(x+y);
+        int width = dm.widthPixels;
+        int height = dm.heightPixels;
+        double x = Math.pow(width, 2);
+        double y = Math.pow(height, 2);
+        double diagonal = Math.sqrt(x + y);
 
-        int dens=dm.densityDpi;
-        double screenInches = diagonal/(double)dens;
-        Log.d("------>","The screenInches "+screenInches);
+        int dens = dm.densityDpi;
+        double screenInches = diagonal / (double) dens;
+        Log.d("------>", "The screenInches " + screenInches);
     }
 
     private void getScreenSizeOfDevice2() {
         Point point = new Point();
         getWindowManager().getDefaultDisplay().getRealSize(point);
         DisplayMetrics dm = getResources().getDisplayMetrics();
-        double x = Math.pow(point.x/ dm.xdpi, 2);
+        double x = Math.pow(point.x / dm.xdpi, 2);
         double y = Math.pow(point.y / dm.ydpi, 2);
         double screenInches = Math.sqrt(x + y);
         Log.d("------>", "Screen inches : " + screenInches);
