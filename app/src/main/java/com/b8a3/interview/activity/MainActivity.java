@@ -3,6 +3,8 @@ package com.b8a3.interview.activity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Looper;
+import android.os.MessageQueue;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +25,13 @@ public class MainActivity extends FragmentActivity {
         getScreenSizeOfDevice();
         getScreenSizeOfDevice2();
         test();
+
+        Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
+            @Override
+            public boolean queueIdle() {
+                return false;
+            }
+        });
     }
 
     private void test() {

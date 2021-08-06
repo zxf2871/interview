@@ -33,7 +33,7 @@ A 是窗体的话 打开B时不会stop,  注意Activit的四个lunchMode: stande
 
 # 4 Handler 机制
 ```
-    //经常见到有这样的失败
+    //经常见到有这样的失败                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
     void checkThread() throw new CalledFromWrongThreadException(
                         "Only the original thread that created a view hierarchy can touch its views");
 ```
@@ -49,11 +49,12 @@ A 是窗体的话 打开B时不会stop,  注意Activit的四个lunchMode: stande
     
 ```
 ## 阻塞UI是怎么回事? post和sendMessage()有什么区别? 有哪些需要注意的问题? 闲时加载?
+[Android 消息机制] http://www.heqiangfly.com/2016/10/10/android-knowledge-message-system-source-code/
 1. 
 2. post 是将执行的Runnable放到message中的mCallBack里面. 然后再通过sendmessage发给队列. 
    在handler执行dispatchMessage时如果message有mCallBack也就是这个Runnable则执行Runnable; 否则执行handleMessage()
 3. 闲时加载
-```aidl
+```
             Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
                 @Override
                 public boolean queueIdle() {
@@ -61,3 +62,5 @@ A 是窗体的话 打开B时不会stop,  注意Activit的四个lunchMode: stande
                 }
             });
 ```
+4. 一个线程只能持有一个Looper; new Handler时可以指定Looper也可以默认, 默认的话使用当前指定的Looper; Looper只有MessageQueue, 
+   Handler通过sendMessage则可以向MessageQueue里面
