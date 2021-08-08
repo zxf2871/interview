@@ -3,6 +3,7 @@ package com.b8a3.interview.activity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.os.MessageQueue;
 import android.util.DisplayMetrics;
@@ -51,7 +52,7 @@ public class MainActivity extends FragmentActivity {
         Integer bi1 = new Integer(1);
         Log.e("------>", "ai1==bi1:" + (ai1 == bi1));
         changeAi(ai1);
-        Log.e("------>", "ai1:" + ai1);
+        Log.e("------>", "ai1:" + ai1 + null);
     }
 
     private void changeA(String a) {
@@ -112,5 +113,18 @@ public class MainActivity extends FragmentActivity {
 
     public void startA(View view) {
         startActivity(new Intent(this, AActivity.class));
+    }
+
+    public void startPost(View view) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("------>", "new Handler().post: ");
+            }
+        }, 100000);
+    }
+
+    public void startView(View view) {
+        startActivity(new Intent(this, ViewVisibilityActivity.class));
     }
 }

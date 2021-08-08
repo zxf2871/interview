@@ -25,6 +25,7 @@
         <activity
             android:name=".activity.YActivity"
             android:launchMode="singleInstance" />
+        <activity android:name=".activity.ViewVisibilityActivity" />
     </application>
 
 </manifest>
