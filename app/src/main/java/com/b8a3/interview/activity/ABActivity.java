@@ -70,6 +70,10 @@ public abstract class  ABActivity extends FragmentActivity {
     }
 
     public abstract void startAnother(View view);
+
+    public void moveBlack(View view) {
+
+    }
 }
 
 /*
