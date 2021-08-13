@@ -22,18 +22,27 @@
         android:text="移动黑块"
         android:textColor="@color/black" />
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="20dp"
+        android:background="#33ff0000"
+        android:layout_alignParentBottom="true">
+
+        <View
+            android:id="@+id/black"
+            android:layout_width="30dp"
+            android:layout_height="60dp"
+            android:background="@color/black" />
+    </FrameLayout>
+
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:layout_below="@+id/button2"
+        android:layout_centerInParent="true"
         android:textColor="@color/black"
         android:textSize="30sp" />
 
-    <View
-        android:id="@+id/black"
-        android:layout_width="30dp"
-        android:layout_height="60dp"
-        android:background="@color/black" />
 </RelativeLayout>
