@@ -127,4 +127,9 @@ public class MainActivity extends FragmentActivity {
     public void startView(View view) {
         startActivity(new Intent(this, ViewVisibilityActivity.class));
     }
+
+    public void startClient(View view) {
+        startActivity(new Intent(this, ClientActivity.class));
+
+    }
 }

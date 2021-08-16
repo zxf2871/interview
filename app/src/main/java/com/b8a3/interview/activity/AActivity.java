@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.b8a3.interview.R;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class AActivity extends ABActivity{
@@ -16,11 +17,18 @@ public class AActivity extends ABActivity{
     float i =0;
     float j =0;
 
+    float x=1;
+    float y=1;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((TextView)findViewById(R.id.button)).setText("启动B");
         view = findViewById(R.id.black);
+        x = savedInstanceState.getFloat("x");
+        y = savedInstanceState.getFloat("y");
+        view.animate().scaleX(x).scaleY(y);
     }
 
     @Override
@@ -38,5 +46,26 @@ public class AActivity extends ABActivity{
     public void moveBlack(View veiw){
         view.setX(i+=10f);
         view.setY(j+=20f);
+//        view.animate().scaleX(x++).scaleX(y++);
+
+        view.setPivotX(0f);
+        view.setPivotY(0f);
+        view.animate().scaleX(++x).scaleY(++y);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putFloat("x", x);
+        outState.putFloat("y", y);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        x = savedInstanceState.getFloat("x");
+        y = savedInstanceState.getFloat("y");
+        view.animate().scaleX(x).scaleY(y);
+
     }
 }

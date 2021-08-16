@@ -17,8 +17,7 @@
         </activity>
         <activity android:name=".activity.AActivity"
             />
-        <activity android:name=".activity.BActivity"
-            android:theme="@style/Theme.AppCompat.Dialog"/>
+        <activity android:name=".activity.BActivity"/>
         <activity
             android:name=".activity.XActivity"
             android:launchMode="singleInstance" />
@@ -26,6 +25,10 @@
             android:name=".activity.YActivity"
             android:launchMode="singleInstance" />
         <activity android:name=".activity.ViewVisibilityActivity" />
+        <activity android:name=".activity.ClientActivity" />
+
+        <service android:name=".RemoteService"
+            android:process=":remote"/>
     </application>
 
 </manifest>

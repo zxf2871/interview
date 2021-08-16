@@ -7,11 +7,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.b8a3.interview.R;
+import com.b8a3.interview.base.BaseActivity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
-public abstract class  ABActivity extends FragmentActivity {
+public abstract class  ABActivity extends BaseActivity {
 
 
     @Override
@@ -73,6 +75,19 @@ public abstract class  ABActivity extends FragmentActivity {
 
     public void moveBlack(View view) {
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.i(getTag(), "onSaveInstanceState");
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.i(getTag(), "onRestoreInstanceState");
     }
 }
 

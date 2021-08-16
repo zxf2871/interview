@@ -96,13 +96,24 @@ MessageQueue.nativePollOnce() native方法弹出一个msg 如果当前没有则�
 * BroadcastQueue 前台10s 后台60s 
 * ContentProvider 10s
 * InputDispatching 5s
-
-# 7 Activity启动过程
+# 7 Activity
+## 7.1 Activity启动过程
 * Launcher -> startActivitySafely() addFlag(FLAG_ACTIVITY_NEW_TASK)
 * Instumentation -> execStartActivity()
 * ActivityTaskManager.getService() //AMS 
 > .startActivity() -> startActivityAsUser() -> 一串链式调用 
-
+## 7.2 onSaveInstanceState(), onRestoreInstanceStae()时机
+* **onSaveInstanceState()**
+1. 切换程序
+2. home回到桌面
+3. 切换横竖屏
+4. 摁下电源，屏幕息屏
+5. 启动另一个app时
+> api28 之前 onPause() -> onSaveInstanceState() -> onStop()
+> api28 之后 onStop() -> onSaveInstanceState() -> onDestroy()
+* **onSaveInstanceState()**
+只有确实被回收重新创建activity时调用
+1. 
 # 8 Binder机制
 # 9 怎样计算一个view在屏幕中的百分比
 1. getLocalVisibleRect(rec) //获取view 
@@ -131,6 +142,117 @@ MessageQueue.nativePollOnce() native方法弹出一个msg 如果当前没有则�
     return rect.top <0 || rect.bottom > view.getHeith();
     百分比公式 rect.height() * 100 / getHeight() == 100
 ```
-2. getGlobalVisibleRect(rec) //获取view相对滑动父布局左顶点偏移量， 不可见时和getLocalVisibleRect(rec)一致 
-3. getDrawingRect(rec) //获取view的绘制范围 （0，0，view.width, view.height）用在和滑动容器上比较合适
-4. getHitRect(rec) view相对于父布局的偏移
+1. getGlobalVisibleRect(rec) //获取view相对滑动父布局左顶点偏移量， 不可见时和getLocalVisibleRect(rec)一致 
+2. getDrawingRect(rec) //获取view的绘制范围 （0，0，view.width, view.height）用在和滑动容器上比较合适
+3. getHitRect(rec) view相对于父布局的偏移
+# 10 ClassLoader java加载 双亲委派模型
+* 类加载：加载 -> 链接 -> 初始化
+* 链接：验证 —> 准备 ->解析
+* 类加载分类：显示加载 vs 隐式加载
+> **显式加载** Class.forName("xxx"); ClassLoader.getSystemClassloader().loadClass("xxx");
+> 
+> **隐式加载** new XXX();
+* 唯一性
+> 同一个类加载器，加载同一个class 两个类才相等
+> 
+类加载器：启动类加载器；扩展类加载器；应用程序类加载器；——自定义类加载器；
+* **双亲委派机制**
+> 1 类加载器加载类时先判断是否有父类加载器，有则调用父类加载器
+> 
+> 2 如果父类加载器仍然后父类加载器则继续向上委托。直到启动类加载器：Bootstrap
+> 
+> 3 如果父类加载器可以完成任务则使用父类加载的类；否则由子类尝试加载；子类完不成则抛出ClassNotFoundExction
+![](./pic/双亲委派.jpeg)
+ 
+
+# 10 Https
+1. 客户端请求服务器 ---->
+2. 服务器返回给客户端数字证书（正式包含公钥）<-----
+3. 客户端验证证书的合法性。非法的话提示过期或非法警告；否则取出公钥进行后续4
+4. 生成一段随机传作为key同时用公钥对key进行加密；加密后将加密后的key发给服务器 ----->
+5. 服务器接收到客户端发来的加密key后，使用私钥对key进行解密
+6. 双方利用改key进行对称加密解密。通信加密。
+
+# 11 android 启动过程 
+[https://juejin.cn/post/6857822377284550670](链接)
+* **启动阶段**
+1. FistStageMain 第一个阶段
+> 挂载分区，创建关联目录； 初始化Kernel日志系统； 进入SetupSelinux阶段
+2. SetupSelinux SELinux 
+> SELinux  Security-Enhanced Linux 是Linux相对安全子系统
+3. SecondStateMain 第二阶段
+> linux设置；PropertyInit; SELinux设置；创建epoll；设置系统属性StartPropertyService；接卸rc 添加action ：early-init，init，early-boot，boot；执行action 并循环
+* Epoll 
+> epoll 是Linux内核处理大批量文件描述符改进的poll;
+> 
+> 初始化时调用了 InstallSignalFdHandler(&epoll) 设置程序退出信号处理函数
+> InstallInitNotifier（&epoll) 设置属性更改通知函数
+
+* **zygote 启动**
+1. rc 文件解析
+> Android Init Language (AIL) 加载init.rc  
+> init.zygote64_32.rc
+> Android.bp
+
+1. app_main.cpp
+>   创建AppRuntime
+>   创建Dalvik缓存
+>   设置ABI信息
+2. AndroidRuntime
+> start -> 启动Java虚拟机；注册jni方法；调用ZygoteInit转入Java类中
+>  启动Java 虚拟机 
+> jni函数注册
+> ZygoteInit.java
+3. fragmework
+> Activity Manager；Window Manager；ContentProviders；View System；Notification Manager；Package Manager；Telephony Manager；Resource Manager；Location Manager；XMPP；
+4. Activity Framework结构及运行框架 
+- 创建 PhonWindow，PhoneWindow创建DocerView；-》 View ViewGroup
+- WindowManager addView removeView 
+- AMS ActivityManagerService 
+- WMS WindowManagerServece 借助InputManager完成消息处理；
+- InputReaderThread 读取消息；inputDispatcherThread分发消息；
+- InputDispatcherThread 从Channel或ShareMemory获取消息， 通过InputPublisher派发；
+- 进而由ViewRoot处理
+- InputReaderThread和EventHub是生产者；InputDispatcherThread是消费者；InputMotniter是消费渠道，ViewRoot是消费者和生产者的桥梁；WMS和AMS是相互协作
+5. FrameWork启动流程 
+> 。。。。。。。。。。。。。。。。
+
+# 12 Bitmap
+1. BitmapFactory.Option
+- inMutable 返回一个可以修改的bitmap
+- inJustDecodeBounds=true bitmap返回null Options 的out会被设置, 可以宽高和type信息
+- inSampleSize 大于1开始采样; 必须是2的幂次方:1,2,4,8,16
+- inPreferredConfig 默认ARGB_8888 如果不使用透明度可使用RGB_565编码
+- 内存优化：1 Options.insamples 采样；通过计算使用一个合理的采样值；2 Options.inBitmap 图片复用， 
+- 不需要alpha不需要的图片使用Option.inPreferredCofig 选择Bitmap.Config.RGB_565
+2. 内存复用 
+> Bitmap必须为Mutable
+> 4.4后 解码图像要小于等于复用
+> 
+# 13 UI 性能优化
+- GPU 调试过度绘制；
+- 减少ViewGroup层级嵌套个数，保持view树扁平
+- 使用merge viewStub include 布局重用和延时加载
+- 尽量使用ConstranintLayout， RelayoutLayout， LinearLayout
+- 去除不必要的背景。减少过多绘制
+- 多层背景使用
+- **过度绘制** 
+- XML布局：空间重叠， 多个背景
+- 自定义View onDraw() 方法中一个区域多次绘制
+
+
+14 Binder 
+- **优势**：
+
+
+| 优势  | 描述               |
+|-----|------------------|
+|性能| 一次数据拷贝，性能仅次于共享内存 |
+| 稳定性|C/S架构，职责明确，架构清晰，稳定性好|
+|安全性|每个APP分配UID，UID鉴别进程身份标志|
+
+- **方式**
+1. Linux动态内核可加载模块。 可单独编译不可单独运行
+2. 内存映射。mmap()实现：将用户空间一块内存映射到内核空间，用户修改能直接反映到内核空间；内核空间修改也能反映到用户空间
+3. 原理 
+

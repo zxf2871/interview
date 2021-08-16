@@ -19,7 +19,7 @@ public class ViewVisibilityActivity extends BaseActivity {
     private TextView showView;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_visibility);
         view = findViewById(R.id.view);
