@@ -29,7 +29,7 @@ public class BookProxy implements BookManager {
                 data.writeInt(0);
             }
             remote.transact(Stub.TRANSAVTION_addBook, data, replay, 0);
-//            replay.readException();
+            replay.readException();
         } catch (Exception e) {
         } finally {
             replay.recycle();

@@ -6,7 +6,6 @@ import android.os.Parcel;
 import android.os.RemoteException;
 
 import com.b8a3.interview.bean.Book;
-import com.b8a3.interview.binder.BookProxy;
 import com.b8a3.interview.binder.server.BookManager;
 
 import androidx.annotation.NonNull;
@@ -53,6 +52,8 @@ public abstract class Stub extends Binder implements BookManager {
                 int b = data.readInt();
                 int r = this.doAdd(a,b);
                 reply.writeInt(r);
+                reply.writeNoException();
+                return true;
 
         }
 
