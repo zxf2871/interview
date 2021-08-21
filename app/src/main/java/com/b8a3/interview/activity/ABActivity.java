@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.b8a3.core.log.LogUtil;
 import com.b8a3.interview.R;
 import com.b8a3.interview.base.BaseActivity;
 
@@ -19,7 +20,7 @@ public abstract class  ABActivity extends BaseActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.i(getTag(), "onRestart");
+        LogUtil.i(getTag(), "onRestart");
     }
 
     @Override
@@ -27,7 +28,7 @@ public abstract class  ABActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a_activity);
         ((TextView)findViewById(R.id.text)).setText(getTag());
-        Log.i(getTag(), "onCreate");
+        LogUtil.i(getTag(), "onCreate");
 
     }
 
@@ -36,38 +37,38 @@ public abstract class  ABActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i(getTag(), "onStart");
+        LogUtil.i(getTag(), "onStart");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.i(getTag(), "onStop");
+        LogUtil.i(getTag(), "onStop");
 
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i(getTag(), "onDestroy");
+        LogUtil.i(getTag(), "onDestroy");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i(getTag(), "onResume");
+        LogUtil.i(getTag(), "onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i(getTag(), "onPause");
+        LogUtil.i(getTag(), "onPause");
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Log.i(getTag(), "onNewIntent");
+        LogUtil.i(getTag(), "onNewIntent");
 
     }
 
@@ -80,14 +81,14 @@ public abstract class  ABActivity extends BaseActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.i(getTag(), "onSaveInstanceState");
+        LogUtil.i(getTag(), "onSaveInstanceState");
 
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        Log.i(getTag(), "onRestoreInstanceState");
+        LogUtil.i(getTag(), "onRestoreInstanceState");
     }
 }
 

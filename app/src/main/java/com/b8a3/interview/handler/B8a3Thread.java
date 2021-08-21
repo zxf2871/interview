@@ -5,6 +5,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
+import com.b8a3.core.log.LogUtil;
+
 import androidx.annotation.NonNull;
 
 public class B8a3Thread extends Thread {
@@ -14,7 +16,7 @@ public class B8a3Thread extends Thread {
 
     @Override
     public void run() {
-        Log.i(TAG, "handler start");
+        LogUtil.i(TAG, "handler start");
         Looper.prepare();
         mLooper = Looper.myLooper();
         mH = new Handler(Looper.myLooper()) {
@@ -24,6 +26,8 @@ public class B8a3Thread extends Thread {
             }
         };
         Looper.loop();
+        LogUtil.i(TAG, "handler end");
+
     }
 
     public Handler getH() {

@@ -241,7 +241,7 @@ MessageQueue.nativePollOnce() native方法弹出一个msg 如果当前没有则�
 - 自定义View onDraw() 方法中一个区域多次绘制
 
 
-14 Binder 
+# 14 Binder   Client, Server, ServicesManager, Binder
 - **优势**：
 
 
@@ -256,3 +256,7 @@ MessageQueue.nativePollOnce() native方法弹出一个msg 如果当前没有则�
 2. 内存映射。mmap()实现：将用户空间一块内存映射到内核空间，用户修改能直接反映到内核空间；内核空间修改也能反映到用户空间
 3. 原理 
 
+# 15 ConstraintLayout
+# 16 序列化类 Parcel
++ writeInt(int val)
++ writeString(String val)

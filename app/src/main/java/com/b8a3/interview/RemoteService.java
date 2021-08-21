@@ -5,8 +5,9 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
 
+import com.b8a3.core.log.LogUtil;
+import com.b8a3.interview.binder.server.RemoteBookManager;
 import com.b8a3.interview.handler.B8a3Thread;
 
 import androidx.annotation.Nullable;
@@ -20,7 +21,7 @@ public class RemoteService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i(TAG, "onCreate");
+        LogUtil.i(TAG, "onCreate");
         mThread = new B8a3Thread();
         if (!mThread.isAlive()) {
             mThread.start();
@@ -30,11 +31,11 @@ public class RemoteService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(TAG, "onStartCommand");
+        LogUtil.i(TAG, "onStartCommand");
         new Handler(mThread.getLooper()).post(new Runnable() {
             @Override
             public void run() {
-                Log.i(TAG, "flags" + flags + " intent:" + intent);
+                LogUtil.i(TAG, "flags" + flags + " intent:" + intent);
             }
         });
         return super.onStartCommand(intent, flags, startId);
@@ -43,7 +44,7 @@ public class RemoteService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "onDestroy");
+        LogUtil.i(TAG, "onDestroy");
         mThread.cancel();
         mThread.interrupt();
     }
@@ -65,7 +66,7 @@ public class RemoteService extends Service {
 
     @Override
     public boolean onUnbind(Intent intent) {
-        Log.i(TAG, "onUnbind");
+        LogUtil.i(TAG, "onUnbind");
 
         return super.onUnbind(intent);
     }
@@ -73,9 +74,10 @@ public class RemoteService extends Service {
     @Override
     public void onRebind(Intent intent) {
         super.onRebind(intent);
-        Log.i(TAG, "onRebind");
+        LogUtil.i(TAG, "onRebind");
 
     }
+
 
     @Override
     public void onTaskRemoved(Intent rootIntent) {
@@ -85,8 +87,7 @@ public class RemoteService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        Log.i(TAG, "onBind ");
-
-        return null;
+        LogUtil.i(TAG, "onBind ");
+        return RemoteBookManager.getInstance();
     }
 }
