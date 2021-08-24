@@ -7,4 +7,6 @@ interface BookManager {
     void addBook(inout Book book);
 
     int doAdd(int a, int b);
+
+    Book getBook(String name);
 }

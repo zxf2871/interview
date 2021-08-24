@@ -257,6 +257,33 @@ MessageQueue.nativePollOnce() native方法弹出一个msg 如果当前没有则�
 3. 原理 
 
 # 15 ConstraintLayout
+- app:layout_constraintLeft_toRightOf="@+id/id1" 把自己的左边约束到id为id1的右边
+- app:layout_constraintTop_topBottomOf="@id/id2" 把自己的上面约束到id为id2的下面
+- 约束布局 设置layout_属性 先设置约束布局：app：layout_constrainLeft_toLeftOf="parent"
+- 基线对齐可以让文字对齐底部对齐layout_constraintBaseline_toBaselineOf="@+id/id3"
+```
+app:layout_constraintCircle="@+id/TextView1"
+app:layout_constraintCircleAngle="120"（角度）
+app:layout_constraintCircleRadius="150dp"（距离）
+```
+- 普通layout_marginHeiht;Top;Left等直接使用不生效。需要先约束
+- 设置match_parent 即：0dp
+- app:layout_constraintDimensionRatio="2:3"/"w2:3"设置长宽比例
+- layout_constraintHorizontal_chainStyle="packed"紧凑;/"spread"展开/"spread_inside"展开两端贴
+- optimizer:优化
+ConstraintLayout在1.1中可以通过设置 layout_optimizationLevel 进行优化，可设置的值有：
+none：无优化
+standard：仅优化直接约束和屏障约束（默认）
+direct：优化直接约束
+barrier：优化屏障约束
+chain：优化链约束
+dimensions：优化尺寸测量
+- Barrier： 约束屏障 androidx.constraintlayout.widget.Barrier
+app:barrierDirection="right"
+app:constraint_referenced_ids="id1,id2"
+- androidx.constraintlayout.widget.Group 分组约束
+- androidx.constraintlayout.widget.Placeholder 占位；可以使用setContent(id)设置过来
+
 # 16 序列化类 Parcel
 + writeInt(int val)
 + writeString(String val)
