@@ -1,6 +1,6 @@
 # 1 android UI适配屏幕 px
 [适配]: [https://www.jianshu.com/p/55e0fca23b4f](适配)
-## 1 dpi 计算
+## 1.1 dpi 计算
 - 普通手机:1920x1080??: (1920^2 + 1080^2)^(1/2) / 5英寸 =  2203 / 5 = 440dpi    分辨率   1080/(440/160) = 372.7dp 实际:411
 - 小米10 2340x1080 (2340^2 + 1080^2)^(1/2) / 6.67英寸 = 2577 / 6.67 = 386dpi    分辨率 1080/(386/160) = 447.7dp  实际:392
 - ????density??, ?????dp???. ???view??dp???????????????; 
@@ -28,10 +28,10 @@ start A -> start B -> backpressed
 
 A 是窗体的话 打开B时不会stop,  注意Activit的四个lunchMode: stander; singleTop; singleTask; singleInstance
 
-# 3 startActivity 子线程是否有问题?
+## 2.3 startActivity 子线程是否有问题?
 | 没有问题. 
 
-# 4 Handler 机制
+# 3 Handler 机制
 
 ```
     //经常见到有这样的失败
@@ -51,7 +51,7 @@ A 是窗体的话 打开B时不会stop,  注意Activit的四个lunchMode: stande
     -> Handler.handleMessage(msg); // 执行自定义子类中的@Override handleMessage()
     
 ```
-## 阻塞UI是怎么回事? post和sendMessage()有什么区别? 有哪些需要注意的问题? 闲时加载?
+## 3.1 阻塞UI是怎么回事? post和sendMessage()有什么区别? 有哪些需要注意的问题? 闲时加载?
 [Android 消息机制] http://www.heqiangfly.com/2016/10/10/android-knowledge-message-system-source-code/
 1. UI阻塞 "无法响应" 
 >
@@ -287,3 +287,23 @@ app:constraint_referenced_ids="id1,id2"
 # 16 序列化类 Parcel
 + writeInt(int val)
 + writeString(String val)
+
+# 17 ImageView
++ adjustViewBounds设置为true时 scaleType自动设为fitCenter
++ 如果手动设置scaleType则自动设置的scaleType失效
++ scaleType: ![一张图概括所有](./pic/scale_type.png)
+1. CENTER:居中展示大的的话裁剪。小的话全部展示
+2. CENTER_CROP 等比缩放。拉伸。
+3. FIT_CENTER
+4. CENTER_INSIDE 等比缩放
+5. FIT_START 同FIT_CENTER 左上角
+6. FIT_END 与FIT_CENTER相反
+7. FIT_XY 缩放
+8. MATRIX 矩
+
+# 18 View 绘制原理：
+1. 设置 syncBarrier
+2. Choreographer 协调者； Vsync 信号
+
+# 19 事件传递操作
+[Android事件分发机制](https://mp.weixin.qq.com/s/IKZCriRpbWaDDrqdD-AIBg)

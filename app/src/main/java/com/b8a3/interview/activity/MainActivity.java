@@ -3,6 +3,7 @@ package com.b8a3.interview.activity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.MessageQueue;
@@ -20,6 +21,8 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Debug.startMethodTracing();
+
         setContentView(R.layout.main_activity);
         printDe();
         printDe1();
@@ -33,6 +36,7 @@ public class MainActivity extends FragmentActivity {
                 return false;
             }
         });
+        Debug.stopMethodTracing();
     }
 
     private void test() {
